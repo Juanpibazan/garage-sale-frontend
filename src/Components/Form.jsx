@@ -11,8 +11,8 @@ const Form = ()=>{
     const [edad,setEdad] = useState(0);
     const [celular,setCelular] = useState(0);
     const [email,setEmail] = useState('');
-    const [repetir,setRepetir] = useState(null);
-    const [venderFuturo,setVenderFuturo] = useState(null);
+    const [repetir,setRepetir] = useState(true);
+    const [venderFuturo,setVenderFuturo] = useState(true);
 
 
     const insertDoc = async ()=>{
