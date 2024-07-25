@@ -11,7 +11,7 @@ import { TShirt } from '../Components/T-shirt';
 const Shirt = ()=>{
 
     return (
-        <mesh>
+        <mesh >
             <boxGeometry />
             <meshNormalMaterial />
         </mesh>
@@ -25,10 +25,10 @@ const ShirtCanvas = ()=>{
         frameloop='demand'
         camera={{
             position:[0,0,5],
-            fov:50
+            fov:5
         }}
         >
-            <color attach='background' args={['#fff']} />
+            <color attach='background' args={['#000']} />
             {/*<Shirt />*/}
             <TShirt />
             <Preload  all/>

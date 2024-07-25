@@ -61,7 +61,7 @@ const Form = ()=>{
     };
 
     return (
-        <div className='max-sm:w-full sm:w-[40%] flex flex-col justify-start items-start gap-3 border-2 bg-slate-100 rounded-xl p-2 mt-5'>
+        <div className='max-sm:w-full sm:w-[30%] flex flex-col justify-start items-start gap-3 border-2 bg-slate-100 rounded-xl p-2 mt-5'>
             <div className='flex flex-col w-full py-4'>
                 <label className='font-palanquin'>Nombre*</label>
                 <input required type='text' placeholder='Christian' className='font-palanquin' value={nombre} onChange={(e)=>setNombre(e.target.value)} />
