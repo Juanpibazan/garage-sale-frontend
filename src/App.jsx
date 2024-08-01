@@ -17,6 +17,9 @@ function App() {
         <Hero/>
 
       </section>
+      <section className='h-screen w-full flex justify-center items-center gap-5'>
+        <ShirtCanvas />
+      </section>
     </main>
   )
 }
