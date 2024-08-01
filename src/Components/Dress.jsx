@@ -17,7 +17,14 @@ const Dress = (props)=>{
             {/*<hemisphereLight intensity={1.5} /> */}
             <ambientLight intensity={0.7} />
             <directionalLight color='red' position={[0,0,5]}  />
-            {/*<spotLight intensity={0.5} angle={0.1} penumbra={1} position={[10, 15, -5]} castShadow />*/}
+            <spotLight
+                position={[-20,50,10]}
+                angle={0.12}
+                penumbra={0.5}
+                intensity={2}
+                castShadow
+                shadow-mapSize={1024}
+                />
             <primitive
             object={dress.scene}
             //scale={1.5}
