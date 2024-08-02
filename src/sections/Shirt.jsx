@@ -41,7 +41,7 @@ const ShirtCanvas = ()=>{
         frameloop='demand'
         camera={{
             position:[0,180,10],
-            fov:50
+            fov:65
         }}
         >
             <Suspense

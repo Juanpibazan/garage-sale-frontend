@@ -12,12 +12,12 @@ function App() {
 
 
   return (
-    <main className='relative min-h-screen bg-gradient-to-b from-[#f1bc15] to-[#b2b2b2]'>
+    <main className='relative min-h-screen bg-gradient-to-b from-[#f1bc15] to-[#b2b2b2]  flex flex-col justify-start items-center gap-5'>
       <section className='px-10 py-5'>
         <Hero/>
 
       </section>
-      <section className='h-screen w-full flex justify-center items-center gap-5'>
+      <section className='h-screen w-[80%] flex justify-center items-center gap-5'>
         <ShirtCanvas />
       </section>
     </main>
