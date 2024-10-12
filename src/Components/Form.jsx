@@ -1,5 +1,7 @@
 import React, {useState, useRef} from 'react';
 import { collection, addDoc } from "firebase/firestore";
+import { ToastContainer,toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import {db} from '../firebase';
 
@@ -8,19 +10,22 @@ const Form = ()=>{
 
     const [nombre,setNombre] = useState('');
     const [apellido,setApellido] = useState('');
-    const [edad,setEdad] = useState(0);
-    const [celular,setCelular] = useState(0);
+    const [edad,setEdad] = useState('');
+    const [celular,setCelular] = useState('');
     const [email,setEmail] = useState('');
-    const [repetir,setRepetir] = useState(true);
-    const [venderFuturo,setVenderFuturo] = useState(true);
+    const [repetir,setRepetir] = useState(null);
+    const [venderFuturo,setVenderFuturo] = useState(null);
 
 
     const insertDoc = async ()=>{
         try {
+            const toastifyId = toast.loading('Por favor espere',{
+                closeOnClick: true
+            }) ;
             if(nombre !=='' &&
                 apellido !=='' &&
-                edad !== 0 &&
-                celular !== 0 &&
+                edad !== '' &&
+                celular !== '' &&
                 email !== '' &&
                 repetir !== null &&
                 venderFuturo !== null
@@ -34,24 +39,80 @@ const Form = ()=>{
                     repetir,
                     futuro_vender:venderFuturo
                 });
-                console.log("Document written in db: ", docRef);
+                if(docRef.id && docRef.id !== ''){
+                    console.log("Document written in db: ", docRef);
+                    toast.update(toastifyId,{
+                        render:'El registro se realizó exitosamente! Gracias.',
+                        closeOnClick: true,
+                        type:'success',
+                        isLoading:false
+                    });
+                } else {
+                    toast.update(toastifyId,{
+                        render:'Ocurrió un error al momento de registrar. Intente nuevamente por favor.',
+                        closeOnClick: true,
+                        type:'error',
+                        isLoading:false
+                    });
+                }
+
             }
             else if(nombre ===''){
-                alert('El Nombre es obligatorio');
+                toast.update(toastifyId,{
+                    render:'El Nombre es obligatorio',
+                    type:'error',
+                    autoClose:true,
+                    closeOnClick:true,
+                    isLoading:false
+                });
             }
             else if(apellido ===''){
-                alert('El Apellido es obligatorio');
+                toast.update(toastifyId,{
+                    render:'El Apellido es obligatorio',
+                    type:'error',
+                    autoClose:true,
+                    closeOnClick:true,
+                    isLoading:false
+                });
             }
-
-            else if(edad ===''){
-                alert('La Edad es obligatorio');
-            }
-
             else if(celular ===''){
-                alert('El Celular es obligatorio');
+                toast.update(toastifyId,{
+                    render:'El Celular es obligatorio',
+                    type:'error',
+                    autoClose:true,
+                    closeOnClick:true,
+                    isLoading:false
+                });
             }
+
+            else if(edad ==='' || edad==='0'){
+                toast.update(toastifyId,{
+                    render:'La Edad es obligatoria',
+                    type:'error',
+                    autoClose:true,
+                    closeOnClick:true,
+                    isLoading:false
+                });
+            }
+
             else if(email ===''){
-                alert('El E-Mail es obligatorio');
+                toast.update(toastifyId,{
+                    render:'El E-Mail es obligatorio',
+                    type:'error',
+                    autoClose:true,
+                    closeOnClick:true,
+                    isLoading:false
+                });
+            }
+
+            else if(repetir ==='' || venderFuturo==='' || repetir === null || venderFuturo === null){
+                toast.update(toastifyId,{
+                    render:"Debes elegir explícitamente 'Sí' o 'No'",
+                    type:'error',
+                    autoClose:true,
+                    closeOnClick:true,
+                    isLoading:false
+                });
             }
 
 
@@ -85,7 +146,7 @@ const Form = ()=>{
             <div className='flex flex-col w-full py-4 gap-2'>
                 <label className='font-palanquin'>Te gustaría que repitamos la Venta de Garaje?*</label>
                 <select required className='font-palanquin' value={repetir} onChange={(e)=>setRepetir(e.target.value)}>
-                    <option disabled>Eliga una opción</option>
+                    <option value='' style={{backgroundColor:'#a2a2a2', textDecoration:'line-through'}}>Eliga una opción</option>
                     <option value={true}>Sí</option>
                     <option value={false}>No</option>
                 </select>
@@ -93,12 +154,12 @@ const Form = ()=>{
             <div className='flex flex-col w-full py-4 gap-2'>
                 <label className='font-palanquin'>Estarías interesad@ en vender tus cosas?*</label>
                 <select required className='font-palanquin' value={venderFuturo} onChange={(e)=>setVenderFuturo(e.target.value)}>
-                    <option disabled>Eliga una opción</option>
+                    <option value='' style={{backgroundColor:'#a2a2a2', textDecoration:'line-through'}}>Eliga una opción</option>
                     <option value={true}>Sí</option>
                     <option value={false}>No</option>
                 </select>
             </div>
-            <p className='text-[7px] text-red-600'>*Campo obligatorio</p>
+            <p className='text-[10px] text-red-600'>*Campo obligatorio</p>
             <div className='flex justify-center items-center vertical-middle w-full'>
                 <button className='bg-gradient-to-r
                 from-[#f1bc15] to-[#b2b2b2] px-8 py-2
@@ -107,7 +168,9 @@ const Form = ()=>{
             </div>
             
 
-
+            <ToastContainer
+            position='top-center'
+            />
         </div>
     )
 };
